@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<!--
+   DOCTYPE html = "Déclaration de type de document".
+   Obligatoire en toute première ligne !
+   Indique au navigateur que c'est une page HTML5 (la version moderne).
+   Sans ça, le navigateur peut interpréter la page de façon incorrecte.
+-->
+
+<html lang="fr">
+<!--
+   <html> = Balise racine. TOUTE la page est à l'intérieur.
+   lang="fr" = indique la langue de la page (français).
+   Utile pour :
+   - Les lecteurs d'écran (accessibilité pour les malvoyants)
+   - Les moteurs de recherche (SEO)
+   - La correction orthographique du navigateur
+-->
+
+<head>
+<!--
+   <head> = En-tête invisible de la page.
+   Contient des informations POUR le navigateur, pas pour l'utilisateur.
+   Rien de ce qui est dans <head> ne s'affiche directement sur la page.
+-->
+
+    <meta charset="UTF-8">
+    <!--
+       <meta> = Métadonnée (information sur la page).
+       charset="UTF-8" = encodage des caractères.
+       UTF-8 supporte tous les caractères du monde : é, è, ê, ç, à, 😊, 中文...
+       Sans ça, les accents peuvent s'afficher comme des symboles étranges : Ã©tudiant
+    -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+       ESSENTIEL pour le responsive design (adaptation mobile) !
+       width=device-width    → la largeur de la page = largeur réelle de l'écran
+       initial-scale=1.0     → zoom de départ = 100% (pas de zoom ni dézoom)
+       Sans ça, un smartphone affiche la page comme un mini-ordinateur (tout petit).
+    -->
+
+    <title>Exaucée Diakabana — Portfolio</title>
+    <!--
+       <title> = Titre qui apparaît dans :
+       - L'onglet du navigateur
+       - Les résultats Google
+       - Les favoris/marque-pages
+       C'est aussi important pour le référencement (SEO).
+    -->
+
+    <link rel="stylesheet" href="style.css">
+    <!--
+       <link> = Relie un fichier externe à la page HTML.
+       rel="stylesheet"  → le fichier est une feuille de style CSS
+       href="style.css"  → chemin du fichier (ici dans le même dossier)
+       Sans cette ligne, aucun style ne s'applique → page toute blanche.
+    -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!--
+       Importe les 3 polices depuis Google Fonts (serveur de Google).
+       Nécessite une connexion internet.
+       Sans ça, le navigateur utilise les polices installées sur l'ordinateur.
+    -->
+
+</head>
+
+<body>
+<!--
+   <body> = Corps de la page.
+   Tout ce qui est visible à l'écran est dans le <body>.
+-->
+
+<!-- ======================================================================
+     HEADER = EN-TÊTE / BARRE DE NAVIGATION
+     Reste fixe en haut de l'écran pendant le défilement (position: fixed en CSS).
+     ====================================================================== -->
+    <header>
+    <!--
+       <header> = Balise sémantique HTML5 pour l'en-tête.
+       "Sémantique" = dit ce que c'est, pas juste comment ça s'affiche.
+       Les moteurs de recherche et lecteurs d'écran comprennent
+       que c'est l'en-tête du site.
+    -->
+
+        <div class="container">
+        <!--
+           <div> = Division, boîte générique sans signification sémantique.
+           Utilisée pour regrouper et styler des éléments.
+           class="container" → applique les styles .container du CSS
+           (centrage + largeur max 1180px).
+        -->
+
+            <div class="logo">
+            <!-- Boîte qui contient le nom/logo du portfolio -->
+
+                <h1>Exaucée <span>Diakabana</span></h1>
+                <!--
+                   <h1> = Titre de niveau 1. Le plus important de la page.
+                   Pour le SEO, idéalement UN SEUL <h1> par page.
+                   <span> = balise inline (en ligne) sans signification propre.
+                   Permet de cibler une partie du texte pour la styler en CSS.
+                   Ici : le prénom est d'une couleur, le nom d'une autre.
+                -->
+
+            </div>
+
+            <nav>
+            <!--
+               <nav> = Navigation. Balise sémantique pour les menus de navigation.
+               Les lecteurs d'écran annoncent "menu de navigation" avant de lire le contenu.
+            -->
+
+                <ul>
+                <!--
+                   <ul> = Unordered List = Liste non ordonnée (sans numéros).
+                   Contient des <li> (list items).
+                   En CSS, on supprime les puces avec list-style: none.
+                   La liste est horizontale grâce à display: flex en CSS.
+                -->
+
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#competences">Compétences</a></li>
+                    <li><a href="#projets">Projets</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <!--
+                       <li> = List Item = élément de liste.
+                       <a> = Anchor = lien hypertexte.
+                       href="#accueil" → ancre interne : fait défiler vers l'élément
+                       qui a id="accueil" sur la même page.
+                       Le # indique que c'est une ancre (pas un autre fichier).
+                    -->
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+<!-- ======================================================================
+     SECTION HÉRO = SECTION D'ACCUEIL PRINCIPALE
+     Première chose visible par le visiteur. Présentation générale.
+     ====================================================================== -->
+    <section id="accueil" class="hero">
+    <!--
+       <section> = Section thématique de la page. Balise sémantique.
+       id="accueil" = identifiant UNIQUE sur toute la page.
+       Sert de cible pour le lien href="#accueil" dans la navigation.
+       Un id ne peut exister qu'UNE SEULE FOIS par page.
+       class="hero" = applique les styles .hero du CSS.
+       Un élément peut avoir UN id ET plusieurs classes en même temps.
+    -->
+
+        <div class="container hero-content">
+        <!--
+           Cet élément a DEUX classes : "container" ET "hero-content".
+           Les deux s'appliquent en même temps.
+           container = centrage + largeur max.
+           hero-content = mise en page flex (texte + image côte à côte).
+        -->
+
+            <div class="hero-text">
+            <!-- Colonne gauche : texte de présentation -->
+
+                <h2>Bonjour, je suis <span class="highlight">Exaucée Diakabana</span></h2>
+                <!--
+                   <h2> = Titre de niveau 2 (sous <h1>).
+                   <span class="highlight"> = met le nom en dégradé rose/mauve
+                   grâce aux styles .highlight dans le CSS.
+                -->
+
+                <p>Étudiante passionnée en génie informatique et systèmes réseaux, en quête d'excellence et de création.</p>
+                <!--
+                   <p> = Paragraph. Bloc de texte.
+                   Le navigateur ajoute automatiquement de l'espace avant/après.
+                   (Qu'on remet à zéro avec margin: 0 dans le reset.)
+                -->
+
+                <a href="#contact" class="btn">Me contacter</a>
+                <!--
+                   <a> = lien. Ici il mène à la section #contact.
+                   class="btn" = styles du bouton définis dans le CSS.
+                   Un lien peut ressembler à un bouton avec du CSS !
+                -->
+
+            </div>
+
+            <div class="hero-image">
+            <!-- Colonne droite : photo de profil -->
+
+                <div class="avatar-placeholder">
+                <!--
+                   Conteneur de l'image. Le CSS y ajoute les anneaux
+                   animés autour de la photo (::before et ::after).
+                -->
+
+                    <img src="photo.png" alt="Exaucée Diakabana">
+                    <!--
+                       <img> = Image. Balise auto-fermante (pas de </img>).
+                       src="photo.jpeg" = chemin du fichier image.
+                       Si l'image est dans le même dossier que le HTML → juste son nom.
+                       
+                       alt="Exaucée Diakabana" = texte alternatif.
+                       S'affiche si l'image ne charge pas.
+                       Lu par les lecteurs d'écran pour les malvoyants.
+                       Important pour le SEO.
+                       Ne jamais laisser l'alt vide sur une image importante !
+                    -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- ======================================================================
+     SECTION COMPÉTENCES
+     Grille de cartes présentant les compétences.
+     ====================================================================== -->
+    <section id="competences" class="competences">
+
+        <div class="container">
+
+            <h2 class="section-title"><em> Mes Compétences</em></h2>
+            <!--
+               <em> = Emphasis = Emphase. Met le texte en italique.
+               Différence avec <i> : <em> a une signification sémantique
+               (le texte est important/mis en valeur).
+               <i> est juste visuel (italique sans signification).
+            -->
+
+            <p class="section-subtitle">Ce que je sais faire, avec passion</p>
+
+            <div class="skills-grid">
+            <!--
+               Conteneur de la grille. Le CSS (display: grid) organise
+               automatiquement les cartes en colonnes responsives.
+            -->
+
+                <div class="skill-card">
+                <!--
+                   Chaque carte = une <div> avec class="skill-card".
+                   Toutes les cartes ont le même style grâce à cette classe.
+                -->
+                    <h3>HTML & CSS</h3>
+                    <p>Création de pages web élégantes en cours de developpement </p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Python</h3>
+                    <p>Base de la programmation et logique algorithmique</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Algorithmique</h3>
+                    <p>Conception et résolution de problèmes complexes</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Câblage réseau</h3>
+                    <p>Configuration et maintenance de réseaux locaux</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Adaptabilité</h3>
+                    <p>S'adapter rapidement à différents environnements</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Art culinaire</h3>
+                    <p>Préparation de repas délicieux avec créativité</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Leadership</h3>
+                    <p>Prise d'initiative et coordination d'équipes</p>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Déléguée</h3>
+                    <p>Représentation et défense d'une communauté</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+<!-- ======================================================================
+     SECTION PROJETS
+     Tableau HTML listant les projets réalisés.
+     ====================================================================== -->
+    <section id="projets" class="projets">
+
+        <div class="container">
+
+            <h2 class="section-title"><em> Mes Projets</em></h2>
+            <p class="section-subtitle">Ce que j'ai accompli jusqu'ici</p>
+
+            <table class="projets-table">
+            <!--
+               <table> = Tableau HTML.
+               Structure d'un tableau :
+               <thead> = tête (en-têtes des colonnes)
+               <tbody> = corps (les données)
+               <tr>    = table row = ligne
+               <th>    = table header = cellule d'en-tête (gras par défaut)
+               <td>    = table data = cellule de données
+            -->
+
+                <thead>
+                <!--
+                   <thead> = En-tête du tableau (la première ligne avec les titres).
+                   Sémantiquement distinct du corps → le navigateur peut répéter
+                   cette ligne sur chaque page lors de l'impression.
+                -->
+                    <tr>
+                    <!-- <tr> = une ligne du tableau -->
+                        <th>Projet</th>
+                        <th>Technologies</th>
+                        <th>Année</th>
+                        <th>Statut</th>
+                        <!-- <th> = cellule d'en-tête. Texte centré et gras par défaut. -->
+                    </tr>
+                </thead>
+
+                <tbody>
+                <!--
+                   <tbody> = Corps du tableau. Contient les vraies données.
+                -->
+                    <tr>
+                        <td>Scénariste d'un animé</td>
+                        <td>HTML, CSS, JavaScript</td>
+                        <td>2024</td>
+                        <td>
+                            <span class="badge success">Terminé</span>
+                            <!--
+                               <span> inline avec deux classes :
+                               - badge : style général (pilule arrondie)
+                               - success : variante verte/mauve (projet terminé)
+                            -->
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Application Météo</td>
+                        <td>React, API OpenWeather</td>
+                        <td>2025</td>
+                        <td><span class="badge success">Terminé</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Blog Personnel</td>
+                        <td>HTML, CSS, PHP</td>
+                        <td>2024</td>
+                        <td>
+                            <span class="badge warning">En cours</span>
+                            <!--
+                               class="badge warning" → variante dorée (en cours).
+                               Le CSS cible .badge.warning (badge ET warning).
+                            -->
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Dashboard Admin</td>
+                        <td>React, Tailwind CSS</td>
+                        <td>2025</td>
+                        <td><span class="badge success">Terminé</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+<!-- ======================================================================
+     SECTION CONTACT
+     Formulaire de contact + informations.
+     ====================================================================== -->
+    <section id="contact" class="contact">
+
+        <div class="container">
+
+            <h2 class="section-title"><em> Me Contacter</em></h2>
+            <p class="section-subtitle">Parlons de votre projet ensemble</p>
+
+            <div class="contact-wrapper">
+            <!-- Conteneur flex : colonne infos (gauche) + formulaire (droite) -->
+
+                <!-- COLONNE GAUCHE : informations de contact -->
+                <div class="contact-info">
+
+                    <h3>Discutons ensemble</h3>
+                    <p>N'hésitez pas à me contacter pour toute collaboration ou question.</p>
+
+                    <ul class="contact-details">
+                    <!-- Liste des coordonnées (email, téléphone, ville) -->
+
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                            <!--
+                               <svg> = Scalable Vector Graphics = image vectorielle.
+                               Avantage : s'agrandit sans pixelisation (contrairement aux .jpg/.png).
+                               xmlns = namespace XML (obligatoire pour les SVG inline).
+                               width/height = dimensions d'affichage.
+                               viewBox = espace de coordonnées interne (0 0 24 24 = grille de 24x24).
+                               fill="none" = pas de couleur de remplissage.
+                               stroke="currentColor" = contour = couleur du texte parent (héritée).
+                               stroke-width = épaisseur du contour.
+                               aria-hidden="true" = cachée aux lecteurs d'écran (icône décorative).
+                            -->
+                                <path d="M3 8.5v7A2.5 2.5 0 0 0 5.5 18h13A2.5 2.5 0 0 0 21 15.5v-7" />
+                                <path d="M21 6.5l-9 6-9-6" />
+                                <!--
+                                   <path> = Chemin vectoriel. Dessine des formes avec des coordonnées.
+                                   d="..." = liste d'instructions de dessin :
+                                   M = moveto (aller à), L = lineto (tracer une ligne),
+                                   v = vertical line, A = arc, Z = fermer le chemin.
+                                   Ici : icône d'enveloppe email.
+                                -->
+                            </svg>
+                            <a href="mailto:diakabanaanneespoirexaucee@gmail.com">
+                            <!--
+                               href="mailto:..." = ouvre le client email de l'utilisateur
+                               (Outlook, Gmail, etc.) avec l'adresse pré-remplie.
+                            -->
+                                diakabanaanneespoirexaucee@gmail.com
+                            </a>
+                        </li>
+
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.99.35 1.95.67 2.86a2 2 0 0 1-.45 2.11L8.91 9.09a13 13 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.11-.45c.9.32 1.87.55 2.86.67A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <a href="tel:+242067920276">+242 06 792 02 76</a>
+                            <!--
+                               href="tel:..." = sur mobile, ouvre l'application téléphone
+                               et compose le numéro automatiquement.
+                            -->
+                        </li>
+
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="2.5" />
+                                <!--
+                                   <circle> = Cercle SVG.
+                                   cx/cy = coordonnées du centre.
+                                   r = rayon.
+                                   Ici : le point au centre de l'icône localisation.
+                                -->
+                            </svg>
+                            Brazzaville, Congo
+                            <!-- Pas de lien ici, juste du texte avec l'icône -->
+                        </li>
+
+                    </ul>
+                </div>
+
+
+                <!-- COLONNE DROITE : formulaire -->
+                <form class="contact-form" action="#" method="post">
+                <!--
+                   <form> = Formulaire interactif.
+                   action="#" = URL vers laquelle envoyer les données.
+                   "#" = même page (à remplacer par un script PHP ou service email).
+                   method="post" = méthode d'envoi HTTP.
+                   POST = données cachées dans le corps de la requête (plus sécurisé).
+                   GET = données visibles dans l'URL (?nom=valeur) (déconseillé pour les forms).
+                -->
+
+                    <div class="form-group">
+                    <!-- Groupe : label + champ. Le CSS espace chaque groupe. -->
+
+                        <label for="nom">Nom complet *</label>
+                        <!--
+                           <label> = Étiquette d'un champ de formulaire.
+                           for="nom" = relie ce label au champ avec id="nom".
+                           Effet : cliquer sur le label active le champ (meilleure UX).
+                           Important pour l'accessibilité (lecteurs d'écran).
+                           * = champ obligatoire (convention visuelle).
+                        -->
+
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom">
+                        <!--
+                           <input> = Champ de saisie. Balise auto-fermante.
+                           type="text"    → champ texte libre (type par défaut).
+                           id="nom"       → identifiant unique, lié au <label for="nom">.
+                           name="nom"     → nom de la donnée lors de l'envoi du formulaire.
+                           required       → champ obligatoire. Le navigateur bloque
+                                           l'envoi si vide (validation native HTML5).
+                           placeholder    → texte gris indicatif qui disparaît quand
+                                           l'utilisateur commence à taper.
+                        -->
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        <!--
+                           type="email" = variante spéciale d'input.
+                           Le navigateur VALIDE automatiquement le format email
+                           (doit contenir @ et un point).
+                           Sur mobile, affiche un clavier adapté (avec @ visible).
+                        -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sujet">Sujet *</label>
+                        <select id="sujet" name="sujet">
+                        <!--
+                           <select> = Menu déroulant.
+                           Présente une liste d'options prédéfinies.
+                           Plus fiable qu'un input texte libre quand les choix sont limités.
+                        -->
+                            <option value="projet">Demande de projet</option>
+                            <option value="collaboration">Collaboration</option>
+                            <option value="emploi">Opportunité d'emploi</option>
+                            <option value="autre">Autre</option>
+                            <!--
+                               <option> = Une option du menu déroulant.
+                               value="projet" = valeur envoyée au serveur (technique).
+                               Texte entre les balises = ce que l'utilisateur voit.
+                               La première option est sélectionnée par défaut.
+                            -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Votre message..."></textarea>
+                        <!--
+                           <textarea> = Zone de texte multiligne (≠ input qui est une ligne).
+                           rows="5" = hauteur initiale (5 lignes visibles).
+                           Différence avec <input> : <textarea> a une balise ouvrante
+                           ET fermante. Le contenu par défaut va entre les deux.
+                           resize: vertical en CSS → redimensionnable en hauteur seulement.
+                        -->
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    <!--
+                       <button> = Bouton cliquable.
+                       type="submit" = soumet le formulaire quand on clique.
+                       Autre valeur : type="button" = ne soumet pas (pour JS).
+                       class="btn btn-primary" = deux classes : style bouton + pleine largeur.
+                       
+                       Différence <button> vs <a class="btn"> :
+                       - <button type="submit"> → pour soumettre des formulaires
+                       - <a class="btn"> → pour naviguer vers une autre page/section
+                    -->
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+<!-- ======================================================================
+     FOOTER = PIED DE PAGE
+     ====================================================================== -->
+    <footer>
+    <!--
+       <footer> = Pied de page. Balise sémantique HTML5.
+       Contient généralement : copyright, liens légaux, crédits.
+    -->
+
+        <div class="container">
+            <p>&copy; 2026 <strong>Exaucée Diakabana</strong> — la queen 👸🏾✨</p>
+            <!--
+               &copy; = entité HTML pour le symbole copyright ©.
+               Les entités HTML permettent d'afficher des caractères spéciaux.
+               Autres entités utiles : &amp; = &, &lt; = <, &gt; = >, &nbsp; = espace insécable.
+               
+               <strong> = Texte important. Affiché en gras.
+               Sémantiquement fort (le contenu a de l'importance).
+               ≠ <b> qui est juste gras visuellement sans signification.
+            -->
+        </div>
+    </footer>
+
+</body>
+<!--
+   </body> et </html> ferment les balises ouvertes en haut du fichier.
+   En HTML, toute balise ouvrante doit avoir sa balise fermante correspondante
+   (sauf les balises auto-fermantes comme <img>, <input>, <meta>, <link>).
+-->
+
+</html>

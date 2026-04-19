@@ -1,0 +1,1093 @@
+/* ==========================================================================
+   PORTFOLIO - EXAUCÉE DIAKABANA
+   Thème : Féminin · Élégant · Enchanteur
+   Palette : Rose poudré · Mauve · Doré · Blanc crème
+   ========================================================================== */
+
+/*
+   On importe 3 polices depuis Google Fonts (un service gratuit de Google).
+   - Cormorant Garamond : police élégante pour les sous-titres
+   - DM Sans           : police moderne et lisible pour le texte normal
+   - Playfair Display  : police serif raffinée pour les grands titres
+   Sans cet import, ces polices ne s'afficheraient pas sur les autres ordinateurs.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+
+/* ==========================================================================
+   PARTIE 1 : VARIABLES GLOBALES (:root)
+   
+   :root cible l'élément racine de la page (la balise <html>).
+   On y définit des "variables CSS" (aussi appelées custom properties).
+   
+   Une variable CSS commence toujours par -- (double tiret).
+   
+   L'avantage : si tu veux changer une couleur, tu la changes UNE SEULE FOIS
+   ici, et elle se met à jour partout sur la page automatiquement.
+   C'est comme des constantes en programmation.
+   
+   Pour utiliser une variable, on écrit : var(--nom-de-la-variable)
+   ========================================================================== */
+
+:root {
+  /* ---- PALETTE DE COULEURS ---- */
+  
+  --rose:        #f2c4ce;   /* Rose poudré clair - utilisé pour les détails décoratifs */
+  --rose-fonce:  #e8a0b0;   /* Rose plus soutenu - survols, bordures actives */
+  --mauve:       #c9a8c5;   /* Mauve doux - bordures, effets de focus */
+  --mauve-fonce: #9b6b97;   /* Mauve profond - titres colorés, éléments importants */
+  --dore:        #d4a85a;   /* Or chaud - boutons, accents premium */
+  --dore-clair:  #f0d9b0;   /* Or très clair - dégradé du bouton */
+  --creme:       #fdf8f5;   /* Blanc cassé chaud - couleur de fond principale */
+  --blanc:       #ffffff;   /* Blanc pur - fonds de cartes */
+  --texte:       #3d2b35;   /* Brun-prune très foncé - texte principal */
+  --texte-doux:  #7a5c68;   /* Brun rosé - texte secondaire, paragraphes */
+  --texte-clair: #b89ba5;   /* Rose grisé - texte discret, placeholders */
+  --fond-section:#fef6f8;   /* Rose ultra-clair - fond sections impaires */
+  --fond-alt:    #f8f0f5;   /* Mauve ultra-clair - fond sections paires */
+  
+  /* Couleurs d'ombre (rgba = rouge, vert, bleu, opacité) */
+  --ombre:       rgba(180, 100, 130, 0.12); /* Ombre rose légère (12% opacité) */
+  --ombre-forte: rgba(155, 107, 151, 0.22); /* Ombre mauve plus marquée (22% opacité) */
+
+  /* ---- DÉGRADÉS (gradients) ---- */
+  /* Un dégradé = transition progressive entre 2 couleurs ou plus */
+  
+  --gradient-hero:   linear-gradient(135deg, #2d1a28 0%, #4a2040 40%, #1e1030 100%);
+  /* Dégradé diagonal (135°) du prune foncé vers le violet profond → fond du hero */
+  
+  --gradient-accent: linear-gradient(135deg, var(--rose) 0%, var(--mauve) 100%);
+  /* Dégradé rose → mauve → utilisé pour les barres décoratives */
+  
+  --gradient-dore:   linear-gradient(135deg, #d4a85a 0%, #f0d9b0 50%, #c9914a 100%);
+  /* Dégradé doré → utilisé pour les boutons */
+  
+  --gradient-card:   linear-gradient(160deg, #fff8fb 0%, #f5edf6 100%);
+  /* Dégradé blanc → mauve très pâle → fond des cartes compétences */
+
+  /* ---- POLICES ---- */
+  --font-titre:  'Playfair Display', Georgia, serif;
+  /* Police principale des titres. Si Playfair Display ne charge pas
+     (pas d'internet), le navigateur utilise Georgia, puis n'importe quelle
+     police serif disponible sur l'ordinateur. */
+  
+  --font-corps:  'DM Sans', sans-serif;
+  /* Police du texte courant. Fallback : n'importe quelle police sans-serif. */
+  
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  /* Police élégante pour les sous-titres italiques. */
+
+  /* ---- BORDURES ARRONDIES ---- */
+  --rayon:  14px; /* Arrondi moyen - inputs, badges */
+  --rayon-l: 24px; /* Grand arrondi - cartes, sections */
+
+  /* ---- ANIMATION ---- */
+  --transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /*
+     Définit comment se font les transitions (effets hover, focus...).
+     - all        : toutes les propriétés qui changent seront animées
+     - 0.35s      : durée de l'animation = 0.35 secondes
+     - cubic-bezier(...) : courbe d'accélération personnalisée
+       (démarrage rapide, ralentissement doux à la fin → sensation naturelle)
+  */
+}
+
+
+/* ==========================================================================
+   PARTIE 2 : RESET & STYLES DE BASE
+   ========================================================================== */
+
+/*
+   Le sélecteur * cible ABSOLUMENT TOUS les éléments HTML de la page.
+   C'est le "reset" : on efface les styles par défaut des navigateurs
+   pour partir d'une base identique sur Chrome, Firefox, Safari, etc.
+*/
+* {
+  margin: 0;
+  /* Supprime toutes les marges extérieures par défaut.
+     Par exemple : les navigateurs ajoutent 8px de marge au <body>,
+     des marges aux <h1>, <p>, etc. On les remet tous à zéro. */
+  
+  padding: 0;
+  /* Supprime tous les espaces intérieurs par défaut.
+     Par exemple : les <ul> ont un padding-left de 40px par défaut. */
+  
+  box-sizing: border-box;
+  /*
+     TRÈS IMPORTANT. Il y a deux façons de calculer la taille d'un élément :
+     
+     Par défaut (content-box) :
+       width: 200px + padding: 20px + border: 5px = élément réel de 250px
+       → Le padding et la bordure S'AJOUTENT à la largeur déclarée.
+     
+     Avec border-box :
+       width: 200px = élément réel de 200px (padding et border INCLUS)
+       → Beaucoup plus prévisible et facile à calculer !
+  */
+}
+
+/*
+   scroll-behavior: smooth sur <html>
+   Quand on clique sur un lien de navigation (#accueil, #contact...),
+   au lieu de sauter brutalement à la section, la page défile doucement.
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+   Styles de base pour tout le corps de la page.
+*/
+body {
+  font-family: var(--font-corps);
+  /* Utilise la variable de police définie dans :root */
+  
+  color: var(--texte);
+  /* Couleur du texte par défaut (tous les éléments héritent de cela) */
+  
+  background-color: var(--creme);
+  /* Couleur de fond de toute la page */
+  
+  line-height: 1.7;
+  /* Hauteur de ligne = 1.7 fois la taille de la police.
+     Si font-size = 16px → espace entre les lignes = 27.2px.
+     Une valeur > 1 améliore la lisibilité (aère le texte). */
+  
+  font-size: 16px;
+  /* Taille de base. Tous les "rem" se calculent depuis cette valeur.
+     1rem = 16px, 2rem = 32px, 0.5rem = 8px */
+  
+  overflow-x: hidden;
+  /* Empêche l'apparition d'une barre de défilement horizontale
+     si un élément dépasse légèrement sur les côtés. */
+}
+
+/*
+   Motif décoratif de fond (halos lumineux).
+   ::before crée un élément virtuel AVANT le contenu de body.
+   On l'utilise pour des décorations sans toucher au HTML.
+*/
+body::before {
+  content: '';
+  /* Obligatoire pour ::before/::after. Sans content, l'élément n'existe pas. */
+  
+  position: fixed;
+  /* Reste fixe même quand on fait défiler la page.
+     top/left/right/bottom: 0 → couvre toute la fenêtre */
+  top: 0; left: 0; right: 0; bottom: 0;
+  
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(242,196,206,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(201,168,197,0.12) 0%, transparent 55%);
+  /* Deux halos flous :
+     - Un rose en haut à gauche (15% / 20%) avec 15% d'opacité
+     - Un mauve en bas à droite (85% / 75%) avec 12% d'opacité
+     Ils s'estompent vers transparent → effet atmosphérique doux. */
+  
+  pointer-events: none;
+  /* L'élément ne capture pas les clics → on peut cliquer "à travers" lui */
+  
+  z-index: 0;
+  /* Reste derrière tout le contenu (le contenu a z-index: 1) */
+}
+
+/*
+   .container est une classe utilitaire réutilisée sur toute la page.
+   Elle centre et limite la largeur du contenu.
+*/
+.container {
+  width: 90%;
+  /* 90% de la largeur du parent → laisse 5% d'espace de chaque côté */
+  
+  max-width: 1180px;
+  /* Peu importe la taille de l'écran, jamais plus de 1180px de large.
+     Évite que les lignes de texte soient trop longues sur grand écran. */
+  
+  margin: 0 auto;
+  /* 0 = marge haut/bas, auto = marge gauche/droite automatique.
+     Avec auto, le navigateur calcule des marges égales des deux côtés
+     → l'élément est CENTRÉ horizontalement. */
+  
+  position: relative;
+  /* Nécessaire pour que les enfants avec position: absolute
+     se positionnent par rapport à .container et non au viewport. */
+  
+  z-index: 1;
+  /* Au-dessus du body::before (qui a z-index: 0) */
+}
+
+
+/* ==========================================================================
+   PARTIE 3 : TYPOGRAPHIE
+   ========================================================================== */
+
+/*
+   Styles communs aux 3 niveaux de titres.
+   Le sélecteur groupé (h1, h2, h3) évite de répéter le code 3 fois.
+*/
+h1, h2, h3 {
+  font-family: var(--font-titre); /* Police Playfair Display pour les titres */
+  font-weight: 700;               /* Gras (400 = normal, 700 = gras, 900 = très gras) */
+  line-height: 1.2;               /* Interlignage serré pour les titres (1.2 au lieu de 1.7) */
+  letter-spacing: -0.01em;
+  /* Réduit légèrement l'espace entre les lettres.
+     Les grandes polices serif sont plus élégantes avec un espacement resserré. */
+}
+
+/* Tailles spécifiques à chaque niveau */
+h1 { font-size: 1.6rem; }  /* Logo navigation = 25.6px */
+h2 { font-size: 2.4rem; }  /* Titres de section = 38.4px */
+h3 { font-size: 1.25rem; } /* Titres de cartes = 20px */
+
+p { color: var(--texte-doux); }
+/* Les paragraphes utilisent une couleur plus douce que les titres
+   pour créer une hiérarchie visuelle naturelle. */
+
+/*
+   Style des grands titres de section ("Mes Compétences", "Mes Projets"...).
+*/
+.section-title {
+  font-family: var(--font-titre);
+  font-size: 2.8rem;     /* 44.8px - bien visible */
+  text-align: center;    /* Centré horizontalement */
+  margin-bottom: 0.5rem; /* Petit espace avant le sous-titre */
+  position: relative;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #7b2d8b 0%, #b44fc7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Les <em> (italique) à l'intérieur du titre ont une couleur spéciale */
+.section-title em {
+  font-style: italic;
+  color: var(--mauve-fonce); /* Mauve profond → mot mis en valeur */
+}
+
+/*
+   Petite ligne dorée décorative sous chaque titre de section.
+   ::after = élément virtuel créé APRÈS le contenu du titre.
+*/
+.section-title::after {
+  content: '';         /* Obligatoire même si vide */
+  display: block;      /* Block pour pouvoir lui donner width/height */
+  width: 50px;         /* Petite ligne de 50px */
+  height: 2px;         /* Fine (2px) */
+  background: var(--gradient-dore); /* Couleur dorée dégradée */
+  margin: 0.8rem auto 0;
+  /* 0.8rem = espace au-dessus, auto = centré horizontalement, 0 = pas d'espace en bas */
+  border-radius: 2px;  /* Bouts légèrement arrondis */
+}
+
+/*
+   Sous-titre en italique sous les titres de section.
+*/
+.section-subtitle {
+  text-align: center;
+  color: var(--texte-clair);        /* Couleur discrète */
+  font-family: var(--font-accent);  /* Police Cormorant Garamond élégante */
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 3rem;  /* Grand espace avant le contenu de la section */
+  letter-spacing: 0.03em; /* Légèrement aéré pour l'aspect "signature" */
+}
+
+/*
+   .highlight = texte avec un dégradé de couleur (visible sur le prénom dans le hero).
+*/
+.highlight {
+  background: var(--gradient-accent); /* Dégradé rose → mauve comme fond */
+  -webkit-background-clip: text;
+  background-clip: text;
+  /*
+     "Découpe" le fond pour qu'il n'apparaisse QUE derrière les lettres.
+     Le préfixe -webkit- est pour les navigateurs basés sur WebKit (Chrome, Safari).
+     On met les deux pour la compatibilité maximale.
+  */
+  color: transparent;
+  /* Rend le texte transparent → on voit le dégradé à travers.
+     Sans color: transparent, la couleur du texte cacherait le dégradé. */
+  font-style: italic; /* Met le prénom en italique */
+}
+
+
+/* ==========================================================================
+   PARTIE 4 : HEADER & NAVIGATION
+   ========================================================================== */
+
+header {
+  background: rgba(253, 248, 245, 0.85);
+  /*
+     Fond blanc cassé avec 85% d'opacité (15% transparent).
+     rgba(rouge, vert, bleu, opacité) - valeurs de 0 à 255 pour les couleurs,
+     0 à 1 pour l'opacité.
+     La semi-transparence permet de voir légèrement le contenu derrière.
+  */
+  
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /*
+     Flou du contenu DERRIÈRE l'élément semi-transparent.
+     Crée l'effet "verre dépoli" (frosted glass).
+     -webkit- pour Safari/Chrome, sans préfixe pour Firefox/Edge.
+  */
+  
+  border-bottom: 1px solid rgba(242, 196, 206, 0.4);
+  /* Fine ligne rose semi-transparente en bas du header pour délimiter la nav */
+  
+  position: fixed;
+  /* Le header reste TOUJOURS visible en haut, même en défilant.
+     L'élément est sorti du flux normal et se positionne par rapport à la fenêtre. */
+  
+  top: 0;    /* Collé en haut de la fenêtre */
+  width: 100%; /* Prend toute la largeur de la fenêtre */
+  z-index: 1000;
+  /*
+     Les éléments s'empilent comme des calques.
+     z-index plus élevé = au-dessus. 1000 garantit que la nav est au-dessus
+     de tout le contenu de la page (qui a z-index: 0 par défaut).
+  */
+  
+  transition: var(--transition);
+  /* Anime les changements de style (si on ajoute du JS plus tard) */
+}
+
+header .container {
+  display: flex;
+  /*
+     Active le mode Flexbox = système de mise en page 1D (sur une ligne ou colonne).
+     Les enfants directs deviennent des "flex items".
+     Flexbox est parfait pour aligner des éléments sur un axe.
+  */
+  
+  justify-content: space-between;
+  /*
+     Distribue les enfants sur l'axe principal (horizontal ici) :
+     le premier enfant (logo) à gauche, le dernier (nav) à droite,
+     tout l'espace vide entre eux.
+  */
+  
+  align-items: center;
+  /* Aligne les enfants sur l'axe secondaire (vertical) → centré verticalement */
+  
+  padding: 1.1rem 0;
+  /* Espace interne : 1.1rem haut/bas, 0 gauche/droite */
+}
+
+.logo h1 {
+  font-family: var(--font-titre);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--texte);
+  letter-spacing: -0.02em;
+}
+
+/* Le span à l'intérieur du logo (le prénom) est coloré en mauve */
+.logo h1 span {
+  color: var(--mauve-fonce);
+  font-style: italic;
+}
+
+nav ul {
+  list-style: none; /* Supprime les puces • des listes */
+  display: flex;    /* Les <li> s'alignent horizontalement */
+  gap: 2.5rem;      /* Espace de 40px entre chaque lien */
+}
+
+nav ul li a {
+  text-decoration: none; /* Supprime le soulignement par défaut des liens */
+  color: var(--texte-doux);
+  font-weight: 400;
+  font-size: 0.9rem;     /* Légèrement plus petit que le texte normal */
+  letter-spacing: 0.06em; /* Espacement aéré pour l'aspect "small caps" */
+  text-transform: uppercase; /* Tout en majuscules */
+  position: relative;
+  /* Nécessaire pour positionner le ::after (soulignement animé) */
+  transition: var(--transition);
+}
+
+/*
+   Soulignement décoratif qui apparaît au survol.
+   Au repos, sa largeur est 0 → invisible.
+   Au survol, sa largeur passe à 100% → soulignement animé.
+*/
+nav ul li a::after {
+  content: '';
+  position: absolute; /* Se positionne par rapport au lien (position: relative) */
+  bottom: -4px;       /* 4px sous le texte */
+  left: 0;
+  width: 0;           /* Invisible au départ */
+  height: 1.5px;      /* Fine ligne */
+  background: var(--gradient-accent); /* Couleur rose → mauve */
+  transition: width 0.3s ease; /* Animation de la largeur */
+  border-radius: 2px;
+}
+
+nav ul li a:hover {
+  color: var(--mauve-fonce); /* Change la couleur au survol */
+}
+
+nav ul li a:hover::after {
+  width: 100%; /* Le soulignement apparaît en glissant de gauche à droite */
+}
+
+
+/* ==========================================================================
+   PARTIE 5 : SECTION HERO (ACCUEIL)
+   ========================================================================== */
+
+.hero {
+  padding: 140px 0 80px;
+  /*
+     Padding haut = 140px (compense les 70-80px du header fixe + espace suppl.)
+     Padding bas = 80px
+     Padding gauche/droite = 0 (géré par .container)
+  */
+  
+  background: var(--gradient-hero);
+  /* Dégradé sombre prune/violet → ambiance mystérieuse et raffinée */
+  
+  min-height: 100vh;
+  /* vh = viewport height = hauteur de la fenêtre du navigateur.
+     100vh = 100% de la hauteur de l'écran → la section remplit tout l'écran. */
+  
+  display: flex;       /* Active Flexbox pour centrer le contenu */
+  align-items: center; /* Centre verticalement le hero-content */
+  position: relative;  /* Pour positionner les éléments décoratifs ::before/::after */
+  overflow: hidden;    /* Cache les cercles décoratifs qui dépassent */
+}
+
+/* Cercle décoratif flou en haut à droite */
+.hero::before {
+  content: '';
+  position: absolute;         /* Se positionne par rapport au .hero */
+  top: -120px; right: -120px; /* Sort partiellement du cadre → effet naturel */
+  width: 500px; height: 500px;
+  border-radius: 50%;         /* Cercle parfait */
+  background: radial-gradient(circle, rgba(242,196,206,0.08) 0%, transparent 70%);
+  /* Halo rose très subtil (8% opacité) qui s'estompe vers transparent */
+  pointer-events: none; /* Pas de blocage des clics */
+}
+
+/* Cercle décoratif flou en bas à gauche */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,197,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero .hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Texte à gauche, image à droite */
+  gap: 4rem;    /* 64px d'espace entre les deux colonnes */
+  position: relative;
+  z-index: 2;   /* Au-dessus des éléments décoratifs (::before/::after ont z-index auto) */
+}
+
+.hero-text {
+  flex: 1;
+  /* flex: 1 = l'élément peut grandir pour prendre l'espace disponible.
+     Avec flex: 1 sur hero-text et flex: 0 0 auto sur hero-image,
+     le texte prend tout l'espace restant après l'image. */
+}
+
+/*
+   Petite étiquette "✦ Portfolio 2026" au-dessus du titre principal.
+   Créée avec ::before sans toucher au HTML.
+*/
+.hero-text::before {
+  content: '✦ Bienvenue dans mon univers';
+  display: block;
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+  color: var(--rose);
+  letter-spacing: 0.12em; /* Très aéré → aspect "label de luxe" */
+  margin-bottom: 1.2rem;
+  opacity: 0.8; /* Légèrement transparent */
+}
+
+.hero-text h2 {
+  font-family: var(--font-titre);
+  font-size: 3.2rem;    /* Grand titre de 51.2px */
+  color: var(--blanc);  /* Blanc sur fond sombre */
+  margin-bottom: 1.2rem;
+  line-height: 1.15;    /* Interlignage très serré pour les grands titres */
+  letter-spacing: -0.03em;
+}
+
+.hero-text p {
+  font-size: 1.05rem;
+  color: rgba(253, 248, 245, 0.7); /* Blanc cassé à 70% d'opacité → doux */
+  margin-bottom: 2.5rem;
+  max-width: 440px;
+  /* Limite la longueur des lignes pour une meilleure lisibilité */
+  line-height: 1.8;
+  font-family: var(--font-accent); /* Police élégante pour la description */
+  font-size: 1.15rem;
+}
+
+
+/* ---- BOUTON ---- */
+.btn {
+  display: inline-flex;
+  /* inline-flex = comme inline-block mais avec les pouvoirs de Flexbox.
+     Permet d'aligner le texte et la flèche (::after) avec gap. */
+  
+  align-items: center; /* Aligne texte et flèche verticalement */
+  gap: 8px;            /* Espace entre le texte et la flèche */
+  
+  padding: 14px 36px;  /* Espace interne : 14px haut/bas, 36px gauche/droite */
+  
+  background: var(--gradient-dore); /* Fond doré dégradé */
+  
+  color: #2d1a28; /* Texte brun-prune foncé (bon contraste sur le doré) */
+  
+  text-decoration: none; /* Supprime le soulignement du lien */
+  
+  border-radius: 50px;
+  /* 50px → bouton en forme de "pilule" (capsule arrondie) */
+  
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  
+  transition: var(--transition); /* Anime le hover */
+  border: none;    /* Supprime la bordure (utile quand c'est un <button>) */
+  cursor: pointer; /* Curseur en forme de main au survol */
+  
+  box-shadow: 0 4px 20px rgba(212, 168, 90, 0.4);
+  /*
+     Ombre portée dorée :
+     0 = décalage horizontal, 4px = décalage vertical (ombre vers le bas),
+     20px = flou, rgba(..., 0.4) = couleur dorée à 40% d'opacité.
+     Donne l'impression que le bouton flotte.
+  */
+  
+  font-family: var(--font-corps);
+}
+
+/* Flèche → qui apparaît automatiquement après le texte du bouton */
+.btn::after {
+  content: '→';
+  transition: transform 0.3s ease; /* Anime le déplacement de la flèche */
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  /* Déplace le bouton de 3px vers le haut → effet "soulève" au survol */
+  
+  box-shadow: 0 8px 30px rgba(212, 168, 90, 0.55);
+  /* Ombre plus grande et plus intense → renforce l'effet de lévitation */
+}
+
+.btn:hover::after {
+  transform: translateX(4px);
+  /* La flèche se déplace de 4px vers la droite → animation dynamique */
+}
+
+
+/* ---- IMAGE DU HERO ---- */
+.hero-image {
+  flex: 0 0 auto;
+  /* flex: 0 0 auto = ne grandit pas, ne rétrécit pas, prend sa taille naturelle */
+  text-align: center;
+}
+
+.avatar-placeholder {
+  position: relative; /* Pour positionner les anneaux ::before/::after */
+  display: inline-block;
+}
+
+/* Premier anneau lumineux animé autour de la photo */
+.avatar-placeholder::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: -8px; right: -8px; bottom: -8px;
+  /* -8px sur tous les côtés = 8px plus grand que la photo de chaque côté */
+  border-radius: 50%; /* Cercle */
+  background: var(--gradient-accent); /* Fond rose → mauve */
+  opacity: 0.5;
+  animation: pulse-ring 3s ease-in-out infinite;
+  /* Applique l'animation "pulse-ring" : durée 3s, répétition infinie */
+}
+
+/* Deuxième anneau (plus grand, juste un contour) */
+.avatar-placeholder::after {
+  content: '';
+  position: absolute;
+  top: -16px; left: -16px; right: -16px; bottom: -16px;
+  border-radius: 50%;
+  border: 1px solid rgba(242, 196, 206, 0.25); /* Contour rose très subtil */
+  animation: pulse-ring 3s ease-in-out infinite 0.5s;
+  /* Même animation mais décalée de 0.5s → effet de vague décalée */
+}
+
+/*
+   @keyframes définit les étapes d'une animation.
+   "pulse-ring" fait pulser les anneaux : zoom léger + changement d'opacité.
+*/
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  /* Début et fin : discret, taille normale */
+  50%       { opacity: 0.6; transform: scale(1.03); }
+  /* Milieu : plus visible, légèrement agrandi (3%) */
+}
+
+/* Styles de la photo elle-même */
+.avatar-placeholder img,
+img.hero-image {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;   /* Découpe l'image en cercle */
+  object-fit: cover;
+  /*
+     L'image remplit le cercle sans se déformer.
+     Si elle n'est pas carrée, elle sera recadrée au centre.
+  */
+  border: 4px solid rgba(242, 196, 206, 0.6); /* Contour rose */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 0 8px rgba(242,196,206,0.1);
+  /*
+     Deux ombres superposées :
+     1. Ombre noire profonde (20px bas, 60px flou) → profondeur
+     2. Halo rose transparent (0 0 0 8px = spread) → couronne lumineuse
+  */
+  position: relative;
+  z-index: 1; /* Au-dessus des anneaux ::before/::after */
+  display: block;
+}
+
+
+/* ==========================================================================
+   PARTIE 6 : SECTION COMPÉTENCES
+   ========================================================================== */
+
+.competences {
+  padding: 90px 0; /* 90px d'espace en haut et en bas */
+  background-color: var(--fond-section); /* Rose ultra-pâle */
+  position: relative;
+}
+
+/* Fine ligne dégradée en haut de la section → séparation élégante */
+.competences::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; /* Toute la largeur, collée en haut */
+  height: 1px;
+  background: var(--gradient-accent);
+  opacity: 0.3; /* Très subtil */
+}
+
+/*
+   CSS Grid = système de mise en page 2D (lignes ET colonnes).
+   Parfait pour les grilles de cartes.
+*/
+.skills-grid {
+  display: grid;
+  
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /*
+     Crée automatiquement des colonnes responsives :
+     - auto-fit : crée autant de colonnes que possible dans l'espace dispo
+     - minmax(220px, 1fr) : chaque colonne fait entre 220px (minimum)
+       et 1fr (1 fraction = part égale de l'espace restant maximum)
+     
+     Résultat : sur grand écran = 4 colonnes, sur tablette = 2-3, sur mobile = 1
+  */
+  
+  gap: 1.5rem; /* 24px d'espace entre toutes les cartes (lignes et colonnes) */
+  margin-top: 1rem;
+}
+
+.skill-card {
+  background: var(--gradient-card); /* Fond dégradé blanc → mauve très pâle */
+  padding: 2rem 1.5rem;    /* Espace interne : 32px haut/bas, 24px côtés */
+  text-align: center;
+  border-radius: var(--rayon-l); /* Grands angles arrondis (24px) */
+  box-shadow: 0 4px 24px var(--ombre); /* Ombre rose légère */
+  border: 1px solid rgba(242, 196, 206, 0.35); /* Contour rose discret */
+  transition: var(--transition); /* Pour les effets au survol */
+  position: relative;  /* Pour positionner la barre ::before */
+  overflow: hidden;    /* Cache la barre quand elle dépasse */
+}
+
+/* Petite barre colorée en haut de chaque carte */
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; /* Partant du centre */
+  transform: translateX(-50%); /* Recentre la barre (corrige l'offset du left: 50%) */
+  width: 40px; height: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 0 4px 4px; /* Arrondi seulement en bas */
+  transition: width 0.3s ease; /* La barre s'élargit au survol */
+}
+
+.skill-card:hover {
+  transform: translateY(-6px); /* Soulève la carte de 6px */
+  box-shadow: 0 12px 40px var(--ombre-forte); /* Ombre plus intense */
+  border-color: rgba(201, 168, 197, 0.5); /* Contour mauve plus visible */
+}
+
+.skill-card:hover::before {
+  width: 70px; /* La barre s'élargit au survol → animation sympa */
+}
+
+.skill-card h3 {
+  font-family: var(--font-titre);
+  font-size: 1.15rem;
+  color: var(--texte);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.skill-card p {
+  font-size: 0.88rem;
+  color: var(--texte-clair); /* Texte discret */
+  line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   PARTIE 7 : SECTION PROJETS
+   ========================================================================== */
+
+.projets {
+  padding: 90px 0;
+  background-color: var(--fond-alt); /* Mauve ultra-pâle → alterne avec rose */
+}
+
+/*
+   Le tableau HTML (<table>) avec des styles modernes.
+*/
+.projets-table {
+  width: 100%;
+  
+  border-collapse: collapse;
+  /*
+     Par défaut, chaque cellule a sa propre bordure → double trait entre les cellules.
+     collapse = les bordures adjacentes fusionnent → une seule ligne propre.
+  */
+  
+  background: var(--blanc);
+  border-radius: var(--rayon-l); /* 24px d'arrondi */
+  overflow: hidden;
+  /*
+     IMPORTANT : sans overflow: hidden, le border-radius ne s'applique pas
+     aux coins du tableau car les cellules débordent.
+     overflow: hidden "coupe" ce qui dépasse le rayon des coins.
+  */
+  box-shadow: 0 8px 40px var(--ombre);
+  margin-top: 1rem;
+}
+
+/* Style commun cellules d'en-tête (th) ET cellules de données (td) */
+.projets-table th,
+.projets-table td {
+  padding: 1.1rem 1.4rem; /* Espace intérieur confortable dans chaque cellule */
+  text-align: left;       /* Texte aligné à gauche */
+  border-bottom: 1px solid rgba(242, 196, 206, 0.3); /* Fine ligne rose entre les lignes */
+}
+
+/* Style spécifique de la ligne d'en-tête */
+.projets-table th {
+  background: linear-gradient(135deg, #2d1a28 0%, #4a2040 100%);
+  /* Fond sombre prune → cohérent avec le hero */
+  color: rgba(253, 248, 245, 0.9); /* Texte blanc légèrement transparent */
+  font-family: var(--font-corps);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;    /* Espacé → style "en-tête de tableau luxe" */
+  text-transform: uppercase; /* Majuscules */
+}
+
+/* Supprime la bordure de la dernière ligne (visuellement propre) */
+.projets-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Survol d'une ligne → légère teinte de fond */
+.projets-table tr:hover td {
+  background-color: rgba(242, 196, 206, 0.08); /* Rose ultra-discret */
+  color: var(--texte); /* Texte légèrement plus foncé */
+}
+
+/* Badges de statut (Terminé / En cours) */
+.badge {
+  display: inline-block;    /* Permet padding sans casser la ligne */
+  padding: 4px 14px;        /* Espacement interne */
+  border-radius: 20px;      /* Forme "pilule" */
+  font-size: 0.78rem;       /* Petit texte */
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.badge.success {
+  /* Badge "Terminé" → teintes mauve douces */
+  background: rgba(201, 168, 197, 0.2);   /* Fond mauve très clair */
+  color: var(--mauve-fonce);              /* Texte mauve foncé */
+  border: 1px solid rgba(201, 168, 197, 0.4); /* Contour mauve */
+}
+
+.badge.warning {
+  /* Badge "En cours" → teintes dorées */
+  background: rgba(212, 168, 90, 0.15);  /* Fond or très clair */
+  color: #9b7a20;                        /* Texte or foncé */
+  border: 1px solid rgba(212, 168, 90, 0.3);
+}
+
+
+/* ==========================================================================
+   PARTIE 8 : FORMULAIRE DE CONTACT
+   ========================================================================== */
+
+.contact {
+  padding: 90px 0;
+  background-color: var(--fond-section);
+}
+
+/* Conteneur principal du contact (2 colonnes) */
+.contact-wrapper {
+  display: flex; /* Les deux colonnes côte à côte */
+  gap: 0;        /* Pas d'espace entre elles → jointure directe */
+  background: var(--blanc);
+  border-radius: var(--rayon-l);
+  overflow: hidden; /* Pour que les bords arrondis fonctionnent */
+  box-shadow: 0 10px 50px var(--ombre-forte);
+  margin-top: 1rem;
+}
+
+/* Colonne gauche : infos de contact */
+.contact-info {
+  flex: 0 0 540px;
+  /* flex: 0 0 340px = ne grandit pas, ne rétrécit pas, toujours 340px de large */
+  
+  background: var(--gradient-hero); /* Fond sombre comme le hero */
+  padding: 3rem 2.5rem; /* 48px haut/bas, 40px côtés */
+  color: var(--blanc);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grand symbole décoratif en fond de la colonne */
+.contact-info::after {
+  content: '✦';
+  position: absolute;
+  bottom: 2rem; right: 2rem;
+  font-size: 5rem;       /* Très grand mais... */
+  color: rgba(242, 196, 206, 0.08); /* ...très transparent → discret */
+  pointer-events: none;
+}
+
+.contact-info h3 {
+  font-family: var(--font-titre);
+  font-size: 1.7rem;
+  color: var(--blanc);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+.contact-info p {
+  color: rgba(253, 248, 245, 0.65); /* Blanc à 65% → doux */
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.contact-details { list-style: none; }
+
+.contact-details li {
+  margin-bottom: 1.1rem;
+  display: flex;      /* Icône et texte sur la même ligne */
+  align-items: center; /* Alignés verticalement au centre */
+  gap: 0.75rem;       /* Espace entre l'icône et le texte */
+  font-size: 0.9rem;
+}
+
+.contact-details a {
+  color: rgba(253, 248, 245, 0.85); /* Lien presque blanc */
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.contact-details a:hover {
+  color: var(--rose); /* Devient rose au survol */
+}
+
+.contact-details svg {
+  color: var(--rose); /* Les icônes SVG sont en rose */
+  flex-shrink: 0;     /* L'icône ne rétrécit pas si le texte est long */
+}
+
+/* Colonne droite : formulaire */
+.contact-form {
+  flex: 1;     /* Prend tout l'espace restant */
+  padding: 4rem 3.5rem;
+}
+
+/* Groupe label + champ */
+.form-group {
+  margin-bottom: 2rem; /* Espace entre chaque champ */
+}
+
+.form-group label {
+  display: block;  /* Le label occupe toute la largeur → le champ passe à la ligne */
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--texte);
+  letter-spacing: 0.03em;
+  text-transform: uppercase; /* Labels en petites majuscules */
+}
+
+/* Styles communs input, select et textarea */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;        /* Prend toute la largeur du formulaire */
+  padding: 0.85rem 1rem; /* Espace interne confortable */
+  border: 1.5px solid rgba(242, 196, 206, 0.5); /* Bordure rose */
+  border-radius: var(--rayon); /* 14px d'arrondi */
+  font-family: inherit; /* Hérite de la police du parent (sinon navigateur met sa police) */
+  font-size: 0.95rem;
+  color: var(--texte);
+  background: var(--creme); /* Fond blanc cassé */
+  transition: var(--transition);
+  appearance: none;
+  /* Supprime les styles par défaut du navigateur pour select
+     (notamment la flèche native sur certains navigateurs) */
+}
+
+/* Texte fantôme dans les champs vides */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--texte-clair); /* Couleur discrète */
+}
+
+/* Quand un champ est sélectionné (actif) */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  /* Supprime le contour bleu par défaut du navigateur */
+  
+  border-color: var(--mauve); /* Bordure devient mauve */
+  background: var(--blanc);   /* Fond devient blanc pur */
+  
+  box-shadow: 0 0 0 4px rgba(201, 168, 197, 0.15);
+  /*
+     Halo mauve transparent autour du champ :
+     0 0 = pas de décalage, 0 = pas de flou,
+     4px = épaisseur du "spread" (expansion),
+     rgba(..., 0.15) = mauve à 15% d'opacité.
+     Remplace l'outline supprimé (important pour l'accessibilité).
+  */
+}
+
+.form-group textarea {
+  resize: vertical;   /* L'utilisateur peut redimensionner le textarea en hauteur seulement */
+  min-height: 130px;
+}
+
+/* Variante du bouton pour le formulaire → prend toute la largeur */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  font-size: 0.95rem;
+  justify-content: center; /* Centre le texte et la flèche */
+}
+
+
+/* ==========================================================================
+   PARTIE 9 : FOOTER
+   ========================================================================== */
+
+footer {
+  background: var(--gradient-hero); /* Même fond sombre que le hero → cohérence */
+  color: rgba(253, 248, 245, 0.6);  /* Blanc à 60% → discret */
+  text-align: center;
+  padding: 2.5rem 0;
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+footer p {
+  color: rgba(253, 248, 245, 0.6);
+}
+
+footer strong {
+  color: var(--rose); /* Le nom en rose → touche finale glamour */
+}
+
+
+/* ==========================================================================
+   PARTIE 10 : RESPONSIVE DESIGN (MEDIA QUERIES)
+   
+   Les media queries permettent d'adapter le design selon la taille de l'écran.
+   @media (max-width: X) = "si l'écran fait MOINS de X pixels de large"
+   ========================================================================== */
+
+/* Tablettes larges */
+@media (max-width: 900px) {
+  .contact-info {
+    flex: 0 0 280px; /* Réduit la colonne contact de 340px à 280px */
+  }
+}
+
+/* Tablettes et mobiles */
+@media (max-width: 768px) {
+  .hero .hero-content {
+    flex-direction: column;
+    /* Les éléments flex passent de "côte à côte" (row) à "l'un sous l'autre" (column) */
+    text-align: center;
+  }
+
+  .hero-text p { max-width: 100%; }
+  /* Sur mobile, le texte prend toute la largeur */
+
+  .contact-wrapper {
+    flex-direction: column;
+    /* Les deux colonnes (infos + formulaire) se superposent */
+  }
+
+  .contact-info {
+    flex: none; /* Plus de largeur fixe → prend la largeur disponible */
+  }
+
+  nav ul { gap: 1rem; }         /* Réduit l'espace entre les liens de nav */
+  .section-title { font-size: 2.2rem; } /* Titre un peu plus petit */
+  .hero-text h2 { font-size: 2.4rem; }
+
+  .projets-table { font-size: 0.85rem; }
+  .projets-table th,
+  .projets-table td { padding: 0.75rem 0.75rem; }
+}
+
+/* Mobiles petits */
+@media (max-width: 480px) {
+  header .container {
+    flex-direction: column; /* Logo au-dessus de la navigation */
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+  }
+
+  .hero-text h2 { font-size: 1.9rem; }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    /* Force une seule colonne → chaque carte prend toute la largeur */
+  }
+
+  .avatar-placeholder img,
+  img.hero-image {
+    width: 210px; /* Photo plus petite sur mobile */
+    height: 210px;
+  }
+}
